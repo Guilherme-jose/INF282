@@ -3,6 +3,9 @@ from math import radians, sin, cos, sqrt, atan2
 import time
 import csv
 
+
+GEOCODE_CACHE = {}
+
 def get_cities_in_rondonia():
     """
     Fetch all cities in the state of Rondônia, Brazil using the IBGE API.
@@ -28,30 +31,59 @@ print(f"Cities in Rondônia: {len(cities)}")
 for city in cities:
     print(f"  - {city}")
 
+def geocode_city(city):
+    """
+    Get latitude and longitude for a city using Nominatim.
+    Results are cached to avoid repeated requests.
+    """
+    if city in GEOCODE_CACHE:
+        return GEOCODE_CACHE[city]
+
+    url = "https://nominatim.openstreetmap.org/search"
+    params = {"q": f"{city}, Rondônia, Brazil", "format": "json", "limit": 1}
+    headers = {"User-Agent": "DistanceCalculator/1.0 (INF282 project)"}
+
+    delay = 1
+    for attempt in range(5):
+        try:
+            response = requests.get(url, params=params, headers=headers, timeout=30)
+            if response.status_code == 429:
+                time.sleep(delay)
+                delay *= 2
+                continue
+
+            response.raise_for_status()
+            data = response.json()
+            if not data:
+                return None
+
+            lat = float(data[0]['lat'])
+            lon = float(data[0]['lon'])
+            GEOCODE_CACHE[city] = (lat, lon)
+            time.sleep(1)  # Respect Nominatim rate limits
+            return GEOCODE_CACHE[city]
+        except requests.exceptions.RequestException as e:
+            if attempt == 4:
+                print(f"Error geocoding {city}: {e}")
+                return None
+            time.sleep(delay)
+            delay *= 2
+
+
 def get_distance(city1, city2):
     """
-    Get distance between two cities using the Nominatim API.
+    Get distance between two cities using cached Nominatim geocodes.
     Returns distance in kilometers.
     """
     try:
-        url = "https://nominatim.openstreetmap.org/search"
-        params1 = {"q": f"{city1}, Rondônia, Brazil", "format": "json"}
-        params2 = {"q": f"{city2}, Rondônia, Brazil", "format": "json"}
-        headers = {"User-Agent": "DistanceCalculator/1.0"}
-        
-        response1 = requests.get(url, params=params1, headers=headers)
-        response2 = requests.get(url, params=params2, headers=headers)
-        response1.raise_for_status()
-        response2.raise_for_status()
-        
-        data1 = response1.json()
-        data2 = response2.json()
-        
-        if not data1 or not data2:
+        coord1 = geocode_city(city1)
+        coord2 = geocode_city(city2)
+
+        if not coord1 or not coord2:
             return None
-        
-        lat1, lon1 = float(data1[0]['lat']), float(data1[0]['lon'])
-        lat2, lon2 = float(data2[0]['lat']), float(data2[0]['lon'])
+
+        lat1, lon1 = coord1
+        lat2, lon2 = coord2
         
         # Haversine formula
         R = 6371  # Earth radius in km
@@ -83,10 +115,6 @@ def get_city_population(city):
         print(f"Error getting population for {city}: {e}")
         return 0
 
-populations = {city: get_city_population(city) for city in cities}
-print("\nCity Populations:")
-for city, pop in sorted(populations.items(), key=lambda x: x[1], reverse=True):
-    print(f"  - {city}: {pop:,}")
 
 # Calculate distances between all cities and write to file as a matrix
 
@@ -98,10 +126,10 @@ for i, city1 in enumerate(cities):
     for j, city2 in enumerate(cities):
         if i < j:
             distance = get_distance(city1, city2)
-            if distance:
+            if distance is not None:
                 distances_matrix[i][j] = distance
                 distances_matrix[j][i] = distance
-            time.sleep(10)  # Wait 10 seconds between requests to respect API rate limits
+            time.sleep(0.2)
 
 # Write matrix to CSV file
 with open('distances_matrix.csv', 'w', newline='') as f:
