@@ -49,6 +49,17 @@ CUSTO TOTAL DO SISTEMA:           R$ 9,310,431.38
 C6 ===============================================
 
 Status do modelo: Optimal
+============================================================
+Custo Fixo dos PSAs:              R$ 4,500,000.00
+Custo Fixo dos Hospitais:         R$ 2,000,000.00
+Custo de Transporte (Cidades->PSA): R$ 2,031,602.00
+Custo de Transporte (PSA->Hosp):   R$ 691,596.90
+------------------------------------------------------------
+CUSTO TOTAL DO SISTEMA:           R$ 9,223,198.90
+
+C7 ===============================================
+
+Status do modelo: Optimal
 ==================================================
 Custo fixo dos PSAs:             0.00
 Custo de Transporte p/ PSAs:     14,198,481.36
