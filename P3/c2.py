@@ -50,7 +50,7 @@ num_facilities = len(cities)
 
 transport_cost = [[(distances[i * num_facilities + j] * c_t * 2) for j in range(num_facilities)] for i in range(num_customers)]
 facility_cost = [f] * num_facilities
-facility_capacity = [1e9] * num_facilities
+facility_capacity = [22000] * num_facilities
 customer_demand = demands
 
 

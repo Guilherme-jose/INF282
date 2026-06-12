@@ -49,9 +49,10 @@ num_facilities = len(cities)
 
 
 transport_cost = [[(distances[i * num_facilities + j] * c_t * 2) for j in range(num_facilities)] for i in range(num_customers)]
-facility_cost = [f] * num_facilities
+facility_cost = [0] * num_facilities
 facility_capacity = [1e9] * num_facilities
 customer_demand = demands
+p_centers = 1
 
 
 # Create model
@@ -73,6 +74,8 @@ for i in range(num_customers):
 # Capacity constraints
 for j in range(num_facilities):
     prob += lpSum([x[i][j] * customer_demand[i] for i in range(num_customers)]) <= facility_capacity[j] * y[j]
+
+prob += lpSum([y[j] for j in range(num_facilities)]) == p_centers
 
 # Solve
 prob.solve()
