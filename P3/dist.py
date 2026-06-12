@@ -2,10 +2,10 @@ import pandas as pd
 from pathlib import Path
 
 RO = {
-"Alta Floresta d'Oeste": 1100015,
+"Alta Floresta D'Oeste": 1100015,
 "Alto Alegre dos Parecis": 1100379,
 "Alto Paraíso": 1100403,
-"Alvorada d'Oeste": 1100346,
+"Alvorada D'Oeste": 1100346,
 "Ariquemes": 1100023,
 "Buritis": 1100452,
 "Cabixi": 1100031,
@@ -55,6 +55,19 @@ RO = {
 "Vale do Paraíso": 1101807,
 "Vilhena": 1100304
 }
+
+sCid = ["Vilhena", "Ariquemes", "Cacoal", "Guajará-Mirim", "Ouro Preto do Oeste", 
+        "Buritis", "Nova Mamoré", "Alta Floresta D'Oeste", "São Miguel do Guaporé", 
+        "Presidente Médici", "Alvorada D'Oeste", "Costa Marques", "Alto Alegre dos Parecis", 
+        "Itapuã do Oeste", "Governador Jorge Teixeira", "Vale do Anari", "Novo Horizonte do Oeste", 
+        "Corumbiara", "Vale do Paraíso", "Teixeirópolis", "Parecis", "Rio Crespo", 
+        "Castanheiras", "Primavera de Rondônia", "Pimenteiras do Oeste"]
+
+# Filter RO to keep only cities in sCid, in the order they appear in sCid
+RO = {city: RO[city] for city in sCid if city in RO}
+if len(RO) != len(sCid):
+    missing = set(sCid) - set(RO.keys())
+    print(f"Warning: The following cities were not found in RO and will be skipped: {missing}")
 
 base_dir = Path(__file__).resolve().parent
 input_csv = base_dir / "dist_brasil.csv"
@@ -113,7 +126,7 @@ with open(base_dir / "dist_rondonia.txt", 'w') as f:
             distances.append(f"{dist_val:3d}")
     
     for i, distance in enumerate(distances):
-        if i > 0 and i % 52 == 0:
+        if i > 0 and i % len(cities) == 0:
             f.write("\n")
         f.write(distance)
         if i < len(distances) - 1:
