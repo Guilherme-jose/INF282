@@ -56,7 +56,7 @@ RO = {
 "Vilhena": 1100304
 }
 
-sCid = ["Vilhena", "Ariquemes", "Cacoal", "Guajará-Mirim", "Ouro Preto do Oeste", 
+cities = ["Vilhena", "Ariquemes", "Cacoal", "Guajará-Mirim", "Ouro Preto do Oeste", 
         "Buritis", "Nova Mamoré", "Alta Floresta D'Oeste", "São Miguel do Guaporé", 
         "Presidente Médici", "Alvorada D'Oeste", "Costa Marques", "Alto Alegre dos Parecis", 
         "Itapuã do Oeste", "Governador Jorge Teixeira", "Vale do Anari", "Novo Horizonte do Oeste", 
@@ -64,9 +64,9 @@ sCid = ["Vilhena", "Ariquemes", "Cacoal", "Guajará-Mirim", "Ouro Preto do Oeste
         "Castanheiras", "Primavera de Rondônia", "Pimenteiras do Oeste"]
 
 # Filter RO to keep only cities in sCid, in the order they appear in sCid
-RO = {city: RO[city] for city in sCid if city in RO}
-if len(RO) != len(sCid):
-    missing = set(sCid) - set(RO.keys())
+RO = {city: RO[city] for city in cities if city in RO}
+if len(RO) != len(cities):
+    missing = set(cities) - set(RO.keys())
     print(f"Warning: The following cities were not found in RO and will be skipped: {missing}")
 
 base_dir = Path(__file__).resolve().parent
@@ -110,8 +110,6 @@ df.to_csv(output_csv, index=False)
 
 # Write to .txt
 with open(base_dir / "dist_rondonia.txt", 'w') as f:
-    cities = sorted(df['orig'].unique())
-
     for city in cities:
         f.write(f"{city}, ")
 

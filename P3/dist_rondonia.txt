@@ -1,3 +1,4 @@
+Vilhena, Ariquemes, Cacoal, Guajará-Mirim, Ouro Preto do Oeste, Buritis, Nova Mamoré, Alta Floresta D'Oeste, São Miguel do Guaporé, Presidente Médici, Alvorada D'Oeste, Costa Marques, Alto Alegre dos Parecis, Itapuã do Oeste, Governador Jorge Teixeira, Vale do Anari, Novo Horizonte do Oeste, Corumbiara, Vale do Paraíso, Teixeirópolis, Parecis, Rio Crespo, Castanheiras, Primavera de Rondônia, Pimenteiras do Oeste, Distâncias entre as cidades
 Dist:: [   5, 506, 224, 845, 372, 626, 799, 296, 360, 295, 342, 576, 302, 590, 454, 490, 275, 160, 406, 358, 208, 552, 305, 210, 174, 
 506,   5, 284, 346, 137, 127, 300, 330, 297, 212, 231, 515, 337,  89, 125, 128, 310, 532, 171, 169, 365,  51, 247, 345, 593, 
 224, 284,   5, 623, 150, 404, 577, 112, 177,  73, 120, 392, 119, 368, 232, 268,  92, 250, 184, 136,  97, 330,  82,  67, 311, 
