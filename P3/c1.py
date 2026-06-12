@@ -70,31 +70,17 @@ demands = [rondonia_populacao[city] * 0.2 for city in cities]
 distances = []
 for orig in cities:
     for dest in cities:
-        if orig == dest:
-            distances.append(5)
+        dist = df[(df['orig'] == orig) & (df['dest'] == dest)]['dist'].values
+        if len(dist) > 0:
+            distances.append(dist[0])
         else:
-            dist = df[(df['orig'] == orig) & (df['dest'] == dest)]['dist'].values
-            if len(dist) > 0:
-                distances.append(dist[0]/1000)  # Convert to km
-            else:
-                # Use symmetric distance if not found
-                dist = df[(df['orig'] == dest) & (df['dest'] == orig)]['dist'].values
-                distances.append(dist[0]/1000 if len(dist) > 0 else 0)
+            # Use symmetric distance if not found
+            dist = df[(df['orig'] == dest) & (df['dest'] == orig)]['dist'].values
+            distances.append(dist[0] if len(dist) > 0 else 0)
 
 num_customers = len(cities)
 num_facilities = len(cities)
 
-
-'''
-print("Distance Matrix:")
-print("-" * 50)
-for i, orig in enumerate(cities):
-    for j, dest in enumerate(cities):
-        dist = distances[i * num_facilities + j]
-        print(f"{orig:<20} -> {dest:<20} : {dist:>10.2f}")
-print("-" * 50)
-time.sleep(10)
-'''
 
 transport_cost = [[(distances[i * num_facilities + j] * c_t) for j in range(num_facilities)] for i in range(num_customers)]
 facility_cost = [f] * num_facilities

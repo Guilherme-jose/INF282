@@ -68,6 +68,9 @@ df = pd.read_csv(input_csv, sep=';')
 ro_codes = set(RO.values())
 df = df[(df['orig'].isin(ro_codes)) & (df['dest'].isin(ro_codes))]
 
+# Convert distances from meters to kilometers
+df['dist'] = df['dist'] / 1000
+
 # Make matrix symmetric and set diagonal to 5
 for idx, row in df.iterrows():
     orig, dest, dist = row['orig'], row['dest'], row['dist']
@@ -95,6 +98,10 @@ df.to_csv(output_csv, index=False)
 # Write to .txt
 with open(base_dir / "dist_rondonia.txt", 'w') as f:
     cities = sorted(df['orig'].unique())
+
+    for city in cities:
+        f.write(f"{city}, ")
+
     f.write("Distâncias entre as cidades\n")
     f.write("Dist:: [ ")
     
