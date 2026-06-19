@@ -29,12 +29,12 @@ CUSTO TOTAL DO SISTEMA:           R$ 9,376,548.16
 
 C5 ===============================================
 
-Custo Fixo dos PSAs:              R$ 5,000,000.00
+Custo Fixo dos PSAs:              R$ 4,500,000.00
 Custo Fixo dos Hospitais:         R$ 2,000,000.00
-Custo de Transporte (Cidades->PSA): R$ 1,718,420.25
-Custo de Transporte (PSA->Hosp):   R$ 953,420.37
+Custo de Transporte (Cidades->PSA): R$ 2,072,652.18
+Custo de Transporte (PSA->Hosp):   R$ 936,654.67
 ------------------------------------------------------------
-CUSTO TOTAL DO SISTEMA:           R$ 9,671,840.62
+CUSTO TOTAL DO SISTEMA:           R$ 9,509,306.85
 
 C6 ===============================================
 

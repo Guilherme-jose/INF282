@@ -46,7 +46,7 @@ distances = [   5, 506, 224, 845, 372, 626, 799, 296, 360, 295, 342, 576, 302, 5
 174, 593, 311, 931, 458, 713, 886, 382, 447, 382, 428, 662, 278, 677, 540, 577, 361,  61, 493, 445, 243, 639, 392, 297,   5 ]
 
 num_cities = len(cities)
-num_psas = 10
+num_psas = 9
 
 # Matrizes de custo de transporte
 # 1. Cidade para PSA: 100% ida, 90% volta -> fator 1.9
