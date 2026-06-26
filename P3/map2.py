@@ -231,7 +231,10 @@ template = """
 </style>
 {% endmacro %}
 """
-
+macro = MacroElement()
+macro._template = Template(template)
+mapa.get_root().add_child(macro)
+# --- FIM DA LEGENDA ---
 
 # Salva o resultado
 mapa.save("mapa_rondonia_psas_logistica_2_legenda_og.html")
