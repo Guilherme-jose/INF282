@@ -234,5 +234,5 @@ template = """
 
 
 # Salva o resultado
-mapa.save("mapa_rondonia_psas_logistica_2_legend.html")
-print("Sucesso! O mapa foi salvo como 'mapa_rondonia_psas_logistica_2_legend.html'. Abra-o no seu navegador.")
+mapa.save("mapa_rondonia_psas_logistica_2_legenda_og.html")
+print("Sucesso! O mapa foi salvo como 'mapa_rondonia_psas_logistica_2_legenda_og.html'. Abra-o no seu navegador.")

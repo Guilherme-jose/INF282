@@ -3,7 +3,7 @@ import geopandas as gpd
 import folium
 import pandas as pd
 import math
-import branca
+from branca.element import Template, MacroElement
 
 print("Buscando dados oficiais do IBGE...")
 # 1. Carrega o mapa de todos os municípios de Rondônia
@@ -182,48 +182,52 @@ folium.GeoJson(
     }
 ).add_to(mapa)
 
-# Código da legenda usando branca.element posicionada no canto inferior direito
-legend_html = '''
-{% macro html(this, kwargs) %}
-<div style="
-    position: fixed; 
-    bottom: 50px; right: 50px; width: 260px; height: 180px; 
-    background-color: white; border: 2px solid grey; z-index: 9999; font-size: 13px;
-    padding: 10px; border-radius: 5px; opacity: 0.95; box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-    ">
-    <h4 style="margin-top: 0; margin-bottom: 12px; font-weight: bold; font-size: 14px; text-align: center;">Legenda Logística</h4>
-    
-    <div style="margin-bottom: 6px;">
-        <span style="background-color: #9c27b0; border: 1px solid #4a148c; border-radius: 50%; display: inline-block; width: 12px; height: 12px; margin-right: 8px;"></span>
-        Hospital (Alta Complexidade)
-    </div>
-    
-    <div style="margin-bottom: 6px;">
-        <span style="background-color: #e74c3c; border: 1px solid #b71c1c; border-radius: 50%; display: inline-block; width: 12px; height: 12px; margin-right: 8px;"></span>
-        PSA (Atendimento Primário)
-    </div>
-    
-    <div style="margin-bottom: 10px;">
-        <span style="background-color: #3498db; border: 1px solid #1a5276; border-radius: 50%; display: inline-block; width: 12px; height: 12px; margin-right: 8px;"></span>
-        Cidade de Origem
-    </div>
-    
-    <hr style="margin: 8px 0; border: 0; border-top: 1px solid #ccc;">
-    
-    <div style="display: flex; align-items: center; margin-bottom: 6px;">
-        <div style="width: 25px; height: 3px; background-color: #2c3e50; margin-right: 8px;"></div> Cidades ➔ PSAs
-    </div>
-    
-    <div style="display: flex; align-items: center;">
-        <div style="width: 25px; height: 0; border-top: 3px dashed #9c27b0; margin-right: 8px;"></div> PSAs ➔ Hospitais
-    </div>
-</div>
-{% endmacro %}
-'''
 
-macro = branca.element.MacroElement()
-macro._template = branca.element.Template(legend_html)
+# --- INÍCIO DA LEGENDA ---
+template = """
+{% macro html(this, kwargs) %}
+<div id='maplegend' class='maplegend' 
+    style='position: absolute; z-index:9999; border:2px solid grey; background-color:rgba(255, 255, 255, 0.8);
+    border-radius:6px; padding: 10px; font-size:14px; right: 20px; bottom: 20px;'>
+<div class='legend-title'>Legenda</div>
+<div class='legend-scale'>
+  <ul class='legend-labels'>
+    <li><span style='background:#d62728; width: 12px; height: 12px; display: inline-block; border-radius: 50%; border: 2px solid #8c151572; margin-right: 5px;'></span>PSA (Destino)</li>
+    <li><span style='background:#3182bd; width: 12px; height: 12px; display: inline-block; border-radius: 50%; border: 2px solid #1c3d5a6c; margin-right: 5px;'></span>Origem</li>
+    <li><span style='background:#000000; width: 16px; height: 3px; display: inline-block; margin-right: 5px; vertical-align: middle;'></span>Rota de Transporte</li>
+  </ul>
+</div>
+</div>
+<style type='text/css'>
+  .maplegend .legend-title {
+    text-align: left;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    }
+  .maplegend .legend-scale ul {
+    margin: 0;
+    padding: 0;
+    float: left;
+    list-style: none;
+    }
+  .maplegend .legend-scale ul li {
+    font-size: 13px;
+    list-style: none;
+    margin-left: 0;
+    line-height: 20px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    }
+</style>
+{% endmacro %}
+"""
+
+macro = MacroElement()
+macro._template = Template(template)
 mapa.get_root().add_child(macro)
+# --- FIM DA LEGENDA ---
 
 # Salva o resultado
 mapa.save("mapa_rondonia_psas_logistica_2_legenda.html")
