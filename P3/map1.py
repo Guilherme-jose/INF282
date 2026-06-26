@@ -3,6 +3,7 @@ import geopandas as gpd
 import folium
 import pandas as pd
 import math
+from branca.element import Template, MacroElement
 
 print("Buscando dados oficiais do IBGE...")
 # 1. Carrega o mapa de todos os municípios de Rondônia
@@ -184,6 +185,51 @@ folium.GeoJson(
     }
 ).add_to(mapa)
 
+# --- INÍCIO DA LEGENDA ---
+template = """
+{% macro html(this, kwargs) %}
+<div id='maplegend' class='maplegend' 
+    style='position: absolute; z-index:9999; border:2px solid grey; background-color:rgba(255, 255, 255, 0.8);
+    border-radius:6px; padding: 10px; font-size:14px; right: 20px; bottom: 20px;'>
+<div class='legend-title'>Legenda</div>
+<div class='legend-scale'>
+  <ul class='legend-labels'>
+    <li><span style='background:#d62728; width: 12px; height: 12px; display: inline-block; border-radius: 50%; border: 2px solid #8c151572; margin-right: 5px;'></span>PSA (Destino)</li>
+    <li><span style='background:#3182bd; width: 12px; height: 12px; display: inline-block; border-radius: 50%; border: 2px solid #1c3d5a6c; margin-right: 5px;'></span>Origem</li>
+    <li><span style='background:#000000; width: 16px; height: 3px; display: inline-block; margin-right: 5px; vertical-align: middle;'></span>Rota de Transporte</li>
+  </ul>
+</div>
+</div>
+<style type='text/css'>
+  .maplegend .legend-title {
+    text-align: left;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    }
+  .maplegend .legend-scale ul {
+    margin: 0;
+    padding: 0;
+    float: left;
+    list-style: none;
+    }
+  .maplegend .legend-scale ul li {
+    font-size: 13px;
+    list-style: none;
+    margin-left: 0;
+    line-height: 20px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    }
+</style>
+{% endmacro %}
+"""
+
+macro = MacroElement()
+macro._template = Template(template)
+mapa.get_root().add_child(macro)
+# --- FIM DA LEGENDA ---
 # Salva o resultado
-mapa.save("mapa_rondonia_psas_logistica.html")
-print("Sucesso! O mapa foi salvo como 'mapa_rondonia_psas_logistica.html'. Abra-o no seu navegador.")
+mapa.save("mapa_rondonia_psas_logistica_l.html")
+print("Sucesso! O mapa foi salvo como 'mapa_rondonia_psas_logistica_l.html'. Abra-o no seu navegador.")
