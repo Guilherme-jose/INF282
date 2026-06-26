@@ -19,7 +19,8 @@ tags = [
 # 2. Define os dados de transporte fornecidos
 dados_transporte = [
     {"origem": "Vilhena", "destino": "Vilhena", "qtde": 21930},
-    {"origem": "Ariquemes", "destino": "Ariquemes", "qtde": 21834},
+    {"origem": "Ariquemes", "destino": "Ariquemes", "qtde": 19401},
+    {"origem": "Ariquemes", "destino": "Buritis", "qtde": 2433},
     {"origem": "Cacoal", "destino": "Cacoal", "qtde": 19656},
     {"origem": "Guajará-Mirim", "destino": "Guajará-Mirim", "qtde": 8719},
     {"origem": "Ouro Preto do Oeste", "destino": "Ouro Preto do Oeste", "qtde": 7737},
@@ -27,7 +28,7 @@ dados_transporte = [
     {"origem": "Nova Mamoré", "destino": "Guajará-Mirim", "qtde": 5740},
     {"origem": "Alta Floresta D'Oeste", "destino": "Alta Floresta D'Oeste", "qtde": 4557},
     {"origem": "São Miguel do Guaporé", "destino": "Alta Floresta D'Oeste", "qtde": 4461},
-    {"origem": "Presidente Médici", "destino": "Cacoal", "qtde": 4089},
+    {"origem": "Presidente Médici", "destino": "Ouro Preto do Oeste", "qtde": 4089},
     {"origem": "Alvorada D'Oeste", "destino": "Ouro Preto do Oeste", "qtde": 2744},
     {"origem": "Costa Marques", "destino": "Costa Marques", "qtde": 2702},
     {"origem": "Alto Alegre dos Parecis", "destino": "Alta Floresta D'Oeste", "qtde": 2447},
@@ -35,22 +36,26 @@ dados_transporte = [
     {"origem": "Governador Jorge Teixeira", "destino": "Ouro Preto do Oeste", "qtde": 1668},
     {"origem": "Vale do Anari", "destino": "Ouro Preto do Oeste", "qtde": 1644},
     {"origem": "Novo Horizonte do Oeste", "destino": "Alta Floresta D'Oeste", "qtde": 1594},
-    {"origem": "Corumbiara", "destino": "Vilhena", "qtde": 1594},
+    {"origem": "Corumbiara", "destino": "Cacoal", "qtde": 1594},
     {"origem": "Vale do Paraíso", "destino": "Ouro Preto do Oeste", "qtde": 1358},
     {"origem": "Teixeirópolis", "destino": "Ouro Preto do Oeste", "qtde": 904},
     {"origem": "Parecis", "destino": "Alta Floresta D'Oeste", "qtde": 874},
     {"origem": "Rio Crespo", "destino": "Ariquemes", "qtde": 753},
     {"origem": "Castanheiras", "destino": "Alta Floresta D'Oeste", "qtde": 690},
-    {"origem": "Primavera de Rondônia", "destino": "Cacoal", "qtde": 654},
-    {"origem": "Pimenteiras do Oeste", "destino": "Vilhena", "qtde": 462}
+    {"origem": "Primavera de Rondônia", "destino": "Cacoal", "qtde": 358},
+    {"origem": "Primavera de Rondônia", "destino": "Alta Floresta D'Oeste", "qtde": 295},
+    {"origem": "Pimenteiras do Oeste", "destino": "Vilhena", "qtde": 70},
+    {"origem": "Pimenteiras do Oeste", "destino": "Cacoal", "qtde": 392}
 ]
 df_transporte = pd.DataFrame(dados_transporte)
+
 
 # Lista de PSAs (Destinos)
 psas = [
     "Vilhena", "Ariquemes", "Cacoal", "Guajará-Mirim", 
     "Ouro Preto do Oeste", "Buritis", "Alta Floresta D'Oeste", "Costa Marques"
 ]
+
 psas_norm = [c.lower().strip() for c in psas]
 
 # Cidades alvo (todas as origens)
@@ -185,5 +190,5 @@ folium.GeoJson(
 ).add_to(mapa)
 
 # Salva o resultado
-mapa.save("mapa_rondonia_psas_logistica.html")
+mapa.save("mapa_rondonia_psas_logistica_2.html")
 print("Sucesso! O mapa foi salvo como 'mapa_rondonia_psas_logistica.html'. Abra-o no seu navegador.")

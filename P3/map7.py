@@ -16,41 +16,38 @@ tags = [
     'PRC', 'RCR', 'CTN', 'PVR', 'PMO'
 ]
 
-# 2. Define os dados de transporte fornecidos
+# 2. Define os novos dados de transporte fornecidos (Todos para Presidente Médici)
 dados_transporte = [
-    {"origem": "Vilhena", "destino": "Vilhena", "qtde": 21930},
-    {"origem": "Ariquemes", "destino": "Ariquemes", "qtde": 21834},
-    {"origem": "Cacoal", "destino": "Cacoal", "qtde": 19656},
-    {"origem": "Guajará-Mirim", "destino": "Guajará-Mirim", "qtde": 8719},
-    {"origem": "Ouro Preto do Oeste", "destino": "Ouro Preto do Oeste", "qtde": 7737},
-    {"origem": "Buritis", "destino": "Buritis", "qtde": 6130},
-    {"origem": "Nova Mamoré", "destino": "Guajará-Mirim", "qtde": 5740},
-    {"origem": "Alta Floresta D'Oeste", "destino": "Alta Floresta D'Oeste", "qtde": 4557},
-    {"origem": "São Miguel do Guaporé", "destino": "Alta Floresta D'Oeste", "qtde": 4461},
-    {"origem": "Presidente Médici", "destino": "Cacoal", "qtde": 4089},
-    {"origem": "Alvorada D'Oeste", "destino": "Ouro Preto do Oeste", "qtde": 2744},
-    {"origem": "Costa Marques", "destino": "Costa Marques", "qtde": 2702},
-    {"origem": "Alto Alegre dos Parecis", "destino": "Alta Floresta D'Oeste", "qtde": 2447},
-    {"origem": "Itapuã do Oeste", "destino": "Ariquemes", "qtde": 1846},
-    {"origem": "Governador Jorge Teixeira", "destino": "Ouro Preto do Oeste", "qtde": 1668},
-    {"origem": "Vale do Anari", "destino": "Ouro Preto do Oeste", "qtde": 1644},
-    {"origem": "Novo Horizonte do Oeste", "destino": "Alta Floresta D'Oeste", "qtde": 1594},
-    {"origem": "Corumbiara", "destino": "Vilhena", "qtde": 1594},
-    {"origem": "Vale do Paraíso", "destino": "Ouro Preto do Oeste", "qtde": 1358},
-    {"origem": "Teixeirópolis", "destino": "Ouro Preto do Oeste", "qtde": 904},
-    {"origem": "Parecis", "destino": "Alta Floresta D'Oeste", "qtde": 874},
-    {"origem": "Rio Crespo", "destino": "Ariquemes", "qtde": 753},
-    {"origem": "Castanheiras", "destino": "Alta Floresta D'Oeste", "qtde": 690},
-    {"origem": "Primavera de Rondônia", "destino": "Cacoal", "qtde": 654},
-    {"origem": "Pimenteiras do Oeste", "destino": "Vilhena", "qtde": 462}
+    {"origem": "Vilhena", "destino": "Presidente Médici", "qtde": 21930},
+    {"origem": "Ariquemes", "destino": "Presidente Médici", "qtde": 21834},
+    {"origem": "Cacoal", "destino": "Presidente Médici", "qtde": 19656},
+    {"origem": "Guajará-Mirim", "destino": "Presidente Médici", "qtde": 8719},
+    {"origem": "Ouro Preto do Oeste", "destino": "Presidente Médici", "qtde": 7737},
+    {"origem": "Buritis", "destino": "Presidente Médici", "qtde": 6130},
+    {"origem": "Nova Mamoré", "destino": "Presidente Médici", "qtde": 5740},
+    {"origem": "Alta Floresta D'Oeste", "destino": "Presidente Médici", "qtde": 4557},
+    {"origem": "São Miguel do Guaporé", "destino": "Presidente Médici", "qtde": 4461},
+    {"origem": "Presidente Médici", "destino": "Presidente Médici", "qtde": 4089},
+    {"origem": "Alvorada D'Oeste", "destino": "Presidente Médici", "qtde": 2744},
+    {"origem": "Costa Marques", "destino": "Presidente Médici", "qtde": 2702},
+    {"origem": "Alto Alegre dos Parecis", "destino": "Presidente Médici", "qtde": 2447},
+    {"origem": "Itapuã do Oeste", "destino": "Presidente Médici", "qtde": 1846},
+    {"origem": "Governador Jorge Teixeira", "destino": "Presidente Médici", "qtde": 1668},
+    {"origem": "Vale do Anari", "destino": "Presidente Médici", "qtde": 1644},
+    {"origem": "Novo Horizonte do Oeste", "destino": "Presidente Médici", "qtde": 1594},
+    {"origem": "Corumbiara", "destino": "Presidente Médici", "qtde": 1594},
+    {"origem": "Vale do Paraíso", "destino": "Presidente Médici", "qtde": 1358},
+    {"origem": "Teixeirópolis", "destino": "Presidente Médici", "qtde": 904},
+    {"origem": "Parecis", "destino": "Presidente Médici", "qtde": 874},
+    {"origem": "Rio Crespo", "destino": "Presidente Médici", "qtde": 753},
+    {"origem": "Castanheiras", "destino": "Presidente Médici", "qtde": 690},
+    {"origem": "Primavera de Rondônia", "destino": "Presidente Médici", "qtde": 654},
+    {"origem": "Pimenteiras do Oeste", "destino": "Presidente Médici", "qtde": 462}
 ]
 df_transporte = pd.DataFrame(dados_transporte)
 
-# Lista de PSAs (Destinos)
-psas = [
-    "Vilhena", "Ariquemes", "Cacoal", "Guajará-Mirim", 
-    "Ouro Preto do Oeste", "Buritis", "Alta Floresta D'Oeste", "Costa Marques"
-]
+# Lista de PSAs atualizada (Apenas Presidente Médici)
+psas = ["Presidente Médici"]
 psas_norm = [c.lower().strip() for c in psas]
 
 # Cidades alvo (todas as origens)
@@ -139,7 +136,7 @@ for _, row in muni_filtrados.iterrows():
     # Polígono do município
     folium.GeoJson(
         row['geometry'],
-        style_function=lambda style, fc='#3182bd', bc=border_color: {
+        style_function=lambda style, fc=fill_color, bc=border_color: {
             'fillColor': fc,
             'color': bc,
             'weight': 1.5,
@@ -150,7 +147,7 @@ for _, row in muni_filtrados.iterrows():
     # Círculo
     folium.CircleMarker(
         location=[centroid.y, centroid.x],
-        radius=9 if is_psa else 6, # PSAs tem círculos maiores
+        radius=12 if is_psa else 6, # PSA fica com destaque maior por centralizar tudo
         popup=folium.Popup(popup_text, max_width=250),
         tooltip=f"{nome} ({'PSA' if is_psa else 'Origem'})",
         color=border_color,
@@ -185,5 +182,5 @@ folium.GeoJson(
 ).add_to(mapa)
 
 # Salva o resultado
-mapa.save("mapa_rondonia_psas_logistica.html")
+mapa.save("mapa_rondonia_psas_logistica_2.html")
 print("Sucesso! O mapa foi salvo como 'mapa_rondonia_psas_logistica.html'. Abra-o no seu navegador.")

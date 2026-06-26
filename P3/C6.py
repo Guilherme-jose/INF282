@@ -140,6 +140,16 @@ print(f"\nCidades com Hospitais ativos ({len(active_hosps)}):")
 for idx, k in enumerate(active_hosps, 1):
     print(f"  {idx}. {cities[k]}")
 
+#fluxo cidades -> PSA
+print(f"\nFluxo de pacientes das Cidades para os PSAs (100%):")
+print(f"{'Cidade Origem':<25} {'PSA Destino':<25} {'Pacientes/Ano':>15}")
+print("-"*68)
+for i in range(num_cities):
+    for j in range(num_cities):
+        if x[i][j].varValue > 0.5:
+            print(f"{cities[i]:<25} {cities[j]:<25} {customer_demand[i]:>15.1f}")
+
+
 # Fluxo PSA -> Hospital
 print(f"\nFluxo de pacientes dos PSAs para os Hospitais (10%):")
 print(f"{'PSA Origem':<25} {'Hospital Destino':<25} {'Pacientes/Ano':>15}")
